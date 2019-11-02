@@ -8,14 +8,9 @@ def just_call():
 
 @app.route("/", methods=["GET", "POST"])
 def Main():
-    return render_template("index.html")
-    """
-    if request.method == "GET":
-        return render_template("index.html")
-    else:
-        age=request.form['age']
-        return render_template("result.html",age=age)
-    """
+    return res.json({'a':'b'})
+
+    
 
 if __name__ == "__main__":
     app.run()
