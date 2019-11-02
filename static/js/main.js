@@ -95,7 +95,7 @@ setTimeout(() => {
   var book_id = params['book_id']
   document.getElementById('toNext').addEventListener('click', function () {
     page++;
-    elem.contentWindow.document.getElementById('bookImage').src = "/static/src/" + book_id + "/pdf/" + page + ".png";
+    elem.contentWindow.document.getElementById('bookImage').src = "../pdf/" + book_id + page + ".png";
   }, false);
 
   document.getElementById('toPrev').addEventListener('click', function () {
@@ -103,7 +103,7 @@ setTimeout(() => {
     if (page < 0) {
       page = 0
     }
-    elem.contentWindow.document.getElementById('bookImage').src = "/static/src/" + book_id + "/pdf/" + page + ".png";
+    elem.contentWindow.document.getElementById('bookImage').src = "../pdf/" + book_id + page + ".png";
   }, false);
 
 }, 1000)
