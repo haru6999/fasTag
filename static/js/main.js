@@ -11,8 +11,8 @@ function Send(path, dic) {
     }
   }
   
-  console.log(Object.values('x?',dic[0]));
-  console.log(Object.values('y?',dic[1]));
+  console.log('x?',Object.values(dic[0]));
+  console.log('y?',Object.values(dic[1]));
 
   keys = Object.keys(dic)
   vals = Object.values(dic)
