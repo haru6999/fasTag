@@ -35,9 +35,9 @@ def get():
 
 @app.route("/get-book", methods=["GET"])
 def getbook():
-    book_id=request.args('id')
-    page_num=request.args('page')
-    return render_template('/?id='+book_id+'&page='+str(page_num))
+    book_id=request.args.get('id')
+    page_num=request.args.get('page')
+    return redirect('/?id='+book_id+'&page='+str(page_num))
 
 
 
