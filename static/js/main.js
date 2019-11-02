@@ -94,8 +94,6 @@ document.getElementById('toNext').addEventListener('click', function () {
 }, false);
 document.getElementById('toPrev').addEventListener('click', function () {
   var srcName = "../png/01/" + page + ".png";
-  if(page !== 0) {
-    page -- ;
-    elem.contentWindow.document.getElementById('bookImage').src = srcName ;
-  }
+  page -- ;
+  elem.contentWindow.document.getElementById('bookImage').src = srcName ;
 }, false);
