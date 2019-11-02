@@ -44,8 +44,9 @@ const elem = document.getElementById('bookIFrame');
 
 setTimeout(() => {
   console.log('ok')
-  var bookImage = elem.contentWindow.document.getElementById('bookImage')
-  console.log(bookImage)
+  var bookImage = elem.contentWindow.document.getElementById('bookImage');
+  console.log("aa");
+  console.log(bookImage);
 
 
   let target = bookImage
@@ -68,8 +69,6 @@ setTimeout(() => {
     let targetY = e.offsetY;
     let gridArrayX = 0;
     let gridArrayY = 0;
-    // console.log(targetX,targetY);
-    // console.log(elementX,elementY);
     for (var i = 0; i < gridX; i++) {
       if (targetX >= arrayX[i]) {
         gridArrayX++;
@@ -80,12 +79,10 @@ setTimeout(() => {
         gridArrayY++;
       }
     }
-
+    console.log(gridArrayX,gridArrayY);
     Send('push', { "x": gridArrayX, "y": gridArrayY, "tagInfo": "hello", "attribute": "memo", "page": 0, "user_id": "000000000", "book_id": "000000000" })
 
   });
-
-
 
   // 画像移動
   params = {};
