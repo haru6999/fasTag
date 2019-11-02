@@ -90,12 +90,12 @@ var page = 0; //ページ
 document.getElementById('toNext').addEventListener('click', function () {
   var srcName = "../png/01/" + page + ".png";
   page ++ ;
-  console.log(srcName);
   elem.contentWindow.document.getElementById('bookImage').src = srcName ;
 }, false);
 document.getElementById('toPrev').addEventListener('click', function () {
+  var srcName = "../png/01/" + page + ".png";
   if(page !== 0) {
     page -- ;
-    elem.contentWindow.document.getElementById('bookImage').src = '"' + srcName + '"';
+    elem.contentWindow.document.getElementById('bookImage').src = srcName ;
   }
 }, false);
