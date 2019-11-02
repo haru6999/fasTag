@@ -37,4 +37,38 @@ function Get(res){
   return res
 }
 
-// 35*50 でグリッド（1750分割）
+// 画像のクリック場所取得
+let target = document.getElementById('book');
+let elementX = document.getElementById('book').clientWidth; //要素の横幅
+let elementY = document.getElementById('book').clientHeight; //要素の縦幅
+const arrayX = [];
+const arrayY = [];
+let gridX = 35;
+let gridY = 50;
+
+for (var i = 0; i < gridX; i++) {
+  arrayX[i] = elementX / gridX * (i+1);
+}
+for (var j = 0; j < gridY; j++) {
+  arrayY[j] = elementY / gridY * (j+1);
+}
+
+target.addEventListener('click', function(e){
+  let targetX = e.offsetX;
+  let targetY = e.offsetY;
+  let gridArrayX = 0;
+  let gridArrayY = 0;
+  // console.log(targetX,targetY);
+  // console.log(elementX,elementY);
+  for (var i = 0; i < gridX; i++) {
+    if(targetX >= arrayX[i]){
+      gridArrayX ++;
+    }
+  }
+  for (var i = 0; i < gridY; i++) {
+    if(targetY >= arrayY[i]){
+      gridArrayY ++;
+    }
+  }
+  console.log(gridArrayX,gridArrayY); //gridでの場所
+});
