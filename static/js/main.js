@@ -20,7 +20,7 @@ function Send(path,dic) {
     output = "" + keys[i] + "=" + vals[i]
   }
   req.open('GET', '/'+path+'?' + output, true);
-  req.send(null);
+  // req.send(null);
 }
 
 document.addEventListener('click', function () {
@@ -38,9 +38,9 @@ function MakePin(res){
 }
 
 // 画像のクリック場所取得
-let target = document.getElementById('bookContent');
-let elementX = document.getElementById('bookContent').clientWidth; //要素の横幅
-let elementY = document.getElementById('bookContent').clientHeight; //要素の縦幅
+let target = document.getElementById('bookImage');
+let elementX = document.getElementById('bookImage').clientWidth; //要素の横幅
+let elementY = document.getElementById('bookImage').clientHeight; //要素の縦幅
 const arrayX = [];
 const arrayY = [];
 let gridX = 35;
@@ -75,3 +75,9 @@ target.addEventListener('click', function(e){
 
 
 // 画像移動
+// var page = 0; //ページ
+// document.getElementById('toNext').addEventListener('click', function() {
+//   console.log('bookImage');
+//   page ++;
+//   document.getElementById('bookImage').src="../static/png/01/"+page+".png";
+// }, false);
