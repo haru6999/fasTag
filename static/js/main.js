@@ -21,6 +21,7 @@ function Send(path, dic) {
     output += "" + keys[i] + "=" + vals[i]
   }
   req.open('GET', '/' + path + '?' + output, true);
+  console.log('output',output);
   // req.send(null);
 }
 
