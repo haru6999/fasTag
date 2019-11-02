@@ -86,12 +86,12 @@ setTimeout(() => {
 
 }, 1000)
 // 画像移動
-var page = 0;
-var srcName = "../png/01/" + page + ".png";
-console.log(srcName);
+var page = 0; //ページ
 document.getElementById('toNext').addEventListener('click', function () {
+  var srcName = "../png/01/" + page + ".png";
   page ++ ;
-  elem.contentWindow.document.getElementById('bookImage').src = '"' + srcName + '"';
+  console.log(srcName);
+  elem.contentWindow.document.getElementById('bookImage').src = srcName ;
 }, false);
 document.getElementById('toPrev').addEventListener('click', function () {
   if(page !== 0) {
