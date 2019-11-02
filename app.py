@@ -1,3 +1,4 @@
+import time
 import os
 from flask import *
 app = Flask(__name__)
@@ -10,12 +11,12 @@ def just_call():
 def Main():
     return render_template("index.html")
 
-
 @app.route("/api", methods=["GET"])
 def api():
-    return res.json({'a':'b'})
-
-    
+    time.sleep(1)
+    print('ok')
+    return jsonify({'a':'b'})
+  
 
 if __name__ == "__main__":
     app.run()

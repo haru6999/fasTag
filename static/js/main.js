@@ -1,28 +1,40 @@
 function Send(dic) {
   let req = new XMLHttpRequest();
-  req.onreadystatechange = function() {
+  req.onreadystatechange = function () {
     if (req.readyState == 4) { // 通信の完了時
       if (req.status == 200) { // 通信の成功時
-        return req.responseText;
+        console.log('done!')
+        Get(eval("("+req.responseText+")"))
       }
     } else {
       console.log('connecting...')
     }
   }
-  req.open('GET', 'helloAjax.php?msg="hello!"', true);
+
+  keys = Object.keys(dic)
+  vals = Object.values(dic)
+  for (i = 0; i < keys.length; i++) {
+    if (i) {
+      output += "&"
+    }
+    output = "" + keys[i] + "=" + vals[i]
+  }
+  req.open('GET', '/api?' + output, true);
   req.send(null);
-  return eval('(' + req.responseText + ')');;
 }
 
-
-document.addEventListener('click', function(e) {
-  console.log(e)
-  dic={
-    'a':'b',
-    'c':1,
+document.addEventListener('click', function () {
+  dic = {
+    'a': 'b',
+    'c': 1,
   }
-  console.log(dic)
+  Send(dic)
 })
 
+function Get(res){
+  console.log(res)
+
+  return res
+}
 
 // 35*50 でグリッド（1750分割）
