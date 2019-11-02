@@ -10,7 +10,6 @@ html,body{
   width: 70%;
   height: 100%;
   display: inline-block;
-  background-color: yellow;
   position: relative;
 }
 iframe {
@@ -18,9 +17,14 @@ iframe {
   height: 100%;
 }
 #bookContent {
-  width: calc(210 * 100vh / 297);
+  width: 80%;
   height: 100vh;
   margin: 0 auto;
+  position: relative;
+}
+#bookFrame{
+  width: calc(210 * 100vh / 297);
+  height: 100vh;
   position: relative;
 }
 #bookImage {
@@ -32,7 +36,9 @@ iframe {
   width: 30%;
   height: 100%;
   display: inline-block;
-  background-color: red;
+  font-size: 1.2vw;
+  line-height: 1.5vw;
+  vertical-align: top;
 }
 
 #toNext {
@@ -54,3 +60,4 @@ iframe {
   top: 0;
   right: 0;
 }
+
