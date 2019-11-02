@@ -10,6 +10,9 @@ function Send(path, dic) {
       console.log('connecting....')
     }
   }
+  
+  console.log(Object.values('x?',dic[0]));
+  console.log(Object.values('y?',dic[1]));
 
   keys = Object.keys(dic)
   vals = Object.values(dic)
