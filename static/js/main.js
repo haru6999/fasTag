@@ -38,9 +38,9 @@ function MakePin(res){
 }
 
 // 画像のクリック場所取得
-let target = document.getElementById('book');
-let elementX = document.getElementById('book').clientWidth; //要素の横幅
-let elementY = document.getElementById('book').clientHeight; //要素の縦幅
+let target = document.getElementById('bookContent');
+let elementX = document.getElementById('bookContent').clientWidth; //要素の横幅
+let elementY = document.getElementById('bookContent').clientHeight; //要素の縦幅
 const arrayX = [];
 const arrayY = [];
 let gridX = 35;
@@ -72,3 +72,6 @@ target.addEventListener('click', function(e){
   }
   console.log(gridArrayX,gridArrayY); //gridでの場所
 });
+
+
+// 画像移動
