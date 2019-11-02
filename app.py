@@ -8,6 +8,11 @@ def just_call():
 
 @app.route("/", methods=["GET", "POST"])
 def Main():
+    return render_template("index.html")
+
+
+@app.route("/api", methods=["GET"])
+def api():
     return res.json({'a':'b'})
 
     
