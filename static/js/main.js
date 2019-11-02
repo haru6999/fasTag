@@ -7,7 +7,7 @@ function Send(dic) {
         Get(eval("("+req.responseText+")"))
       }
     } else {
-      console.log('connecting...')
+      console.log('connecting....')
     }
   }
 
