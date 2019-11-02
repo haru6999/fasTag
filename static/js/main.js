@@ -29,16 +29,6 @@ function MakePin(res) {
   console.log(res)
 }
 
-// // iframeのDOMを取得
-// console.log(elem.contentWindow.document);
-
-// // iframe内のDOMを操作
-// btn.addEventListener('click', function(){
-//  target.innerHTML = 'iframeの外のボタンが<br>クリックされました！！';
-//  target.style.background="red";
-// });
-
-
 // 画像のクリック場所取得
 const elem = document.getElementById('bookIFrame');
 
@@ -93,6 +83,8 @@ setTimeout(() => {
   }
   var page = params['page']; //ページ
   var book_id = params['book_id']
+  console.log('page',page);
+  console.log('book_id',book_id)
   document.getElementById('toNext').addEventListener('click', function () {
     page++;
     elem.contentWindow.document.getElementById('bookImage').src = "../pdf/" + book_id + "/" + page + ".png";
