@@ -89,7 +89,7 @@ setTimeout(() => {
 var page = 0; //ページ
 var srcName = "../png/01/" + page + ".png";
 document.getElementById('toNext').addEventListener('click', function () {
-  page++;
+  page ++ ;
   console.log(srcName);
   elem.contentWindow.document.getElementById('bookImage').src = srcName ;
 }, false);
