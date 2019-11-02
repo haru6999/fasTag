@@ -25,4 +25,4 @@ document.addEventListener('click', function(e) {
 })
 
 
-/*35×*/
+// 35*50 でグリッド（1750分割）
