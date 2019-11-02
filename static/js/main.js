@@ -37,10 +37,25 @@ function MakePin(res){
   return res
 }
 
+// // iframeのDOMを取得
+// console.log(elem.contentWindow.document);
+
+// // iframe内のDOMを操作
+// btn.addEventListener('click', function(){
+//  target.innerHTML = 'iframeの外のボタンが<br>クリックされました！！';
+//  target.style.background="red";
+// });
+
+
 // 画像のクリック場所取得
-let target = document.getElementById('bookImage');
-let elementX = document.getElementById('bookImage').clientWidth; //要素の横幅
-let elementY = document.getElementById('bookImage').clientHeight; //要素の縦幅
+const elem = document.getElementById('bookIFrame');
+console.log(elem)
+const bookImage = elem.contentWindow.document.querySelector('#bookImage');
+console.log(bookImage)
+
+// let target = document.getElementById('bb');
+let elementX = document.getElementById('bb').clientWidth; //要素の横幅
+let elementY = document.getElementById('bb').clientHeight; //要素の縦幅
 const arrayX = [];
 const arrayY = [];
 let gridX = 35;
@@ -75,9 +90,9 @@ target.addEventListener('click', function(e){
 
 
 // 画像移動
-// var page = 0; //ページ
-// document.getElementById('toNext').addEventListener('click', function() {
-//   console.log('bookImage');
-//   page ++;
-//   document.getElementById('bookImage').src="../static/png/01/"+page+".png";
-// }, false);
+var page = 0; //ページ
+document.getElementById('toNext').addEventListener('click', function() {
+  console.log('bookImage');
+  page ++;
+  document.getElementById('bb').src="../static/png/01/"+page+".png";
+}, false);
