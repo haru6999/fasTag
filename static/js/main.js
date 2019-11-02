@@ -93,3 +93,9 @@ document.getElementById('toNext').addEventListener('click', function () {
   console.log(srcName);
   elem.contentWindow.document.getElementById('bookImage').src = srcName ;
 }, false);
+document.getElementById('toPrev').addEventListener('click', function () {
+  if(page !== 0) {
+    page -- ;
+    elem.contentWindow.document.getElementById('bookImage').src = '"' + srcName + '"';
+  }
+}, false);
