@@ -87,7 +87,7 @@ setTimeout(() => {
 }, 1000)
 // 画像移動
 var page = 0; //ページ
-var srcName = "../static/png/01/" + page + ".png";
+var srcName = "../png/01/" + page + ".png";
 document.getElementById('toNext').addEventListener('click', function () {
   page++;
   elem.contentWindow.document.getElementById('bookImage').src = srcName;
