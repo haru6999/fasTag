@@ -84,20 +84,26 @@ setTimeout(() => {
 
   });
 
-}, 1000)
-// 画像移動
-var page = 0; //ページ
-document.getElementById('toNext').addEventListener('click', function () {
-  var srcName = "../png/01/" + page + ".png";
-  page ++ ;
-  elem.contentWindow.document.getElementById('bookImage').src = srcName ;
-  console.log(page);
-}, false);
-document.getElementById('toPrev').addEventListener('click', function () {
-  var srcName = "../png/01/" + page + ".png";
-  if(page !== 0){
-    page -- ;
-    elem.contentWindow.document.getElementById('bookImage').src = srcName ;
+  // 画像移動
+  params = {};
+  try {
+    (location.href.split('?')[1]).split('&').forEach(e => params[e.split('=')[0]] = e.split('=')[1])
+  } catch (e) {
+    console.log(e)
   }
-  console.log(page);
-}, false);
+  var page = params['page']; //ページ
+  var book_id = params['book_id']
+  document.getElementById('toNext').addEventListener('click', function () {
+    page++;
+    elem.contentWindow.document.getElementById('bookImage').src = "/static/src/" + book_id + "/pdf/" + page + ".png";
+  }, false);
+
+  document.getElementById('toPrev').addEventListener('click', function () {
+    page--;
+    if (page < 0) {
+      page = 0
+    }
+    elem.contentWindow.document.getElementById('bookImage').src = "/static/src/" + book_id + "/pdf/" + page + ".png";
+  }, false);
+
+}, 1000)

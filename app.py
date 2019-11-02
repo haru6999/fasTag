@@ -33,6 +33,15 @@ def push():
 def get():
     return #jsonify({key:val for key,val in  request.args})
 
+@app.route("/get-book", methods=["GET"])
+def getbook():
+    book_id=request.args.get('id')
+    page_num=request.args.get('page')
+    return redirect('/?id='+book_id+'&page='+str(page_num))
+
+
+
+
 if __name__ == "__main__":
     app.run()
     port = int(os.getenv("PORT", 5000))
