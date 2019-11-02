@@ -1,10 +1,10 @@
-function Send(dic) {
+function Send(path,dic) {
   let req = new XMLHttpRequest();
   req.onreadystatechange = function () {
     if (req.readyState == 4) { // 通信の完了時
       if (req.status == 200) { // 通信の成功時
         console.log('done!')
-        Get(eval("("+req.responseText+")"))
+        MakePin(eval("("+req.responseText+")"))
       }
     } else {
       console.log('connecting....')
@@ -19,7 +19,7 @@ function Send(dic) {
     }
     output = "" + keys[i] + "=" + vals[i]
   }
-  req.open('GET', '/api?' + output, true);
+  req.open('GET', '/'+path+'?' + output, true);
   req.send(null);
 }
 
@@ -28,10 +28,10 @@ document.addEventListener('click', function () {
     'a': 'b',
     'c': 1,
   }
-  Send(dic)
+  Send('push',dic)
 })
 
-function Get(res){
+function MakePin(res){
   console.log(res)
 
   return res
