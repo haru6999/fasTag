@@ -13,28 +13,20 @@ function Send(path,dic) {
 
   keys = Object.keys(dic)
   vals = Object.values(dic)
+  output=""
   for (i = 0; i < keys.length; i++) {
     if (i) {
       output += "&"
     }
-    output = "" + keys[i] + "=" + vals[i]
+    output += "" + keys[i] + "=" + vals[i]
   }
   req.open('GET', '/'+path+'?' + output, true);
   req.send(null);
 }
 
-document.addEventListener('click', function () {
-  dic = {
-    'a': 'b',
-    'c': 1,
-  }
-  Send('push',dic)
-})
 
 function MakePin(res){
   console.log(res)
-
-  return res
 }
 
 // 画像のクリック場所取得
@@ -70,7 +62,9 @@ target.addEventListener('click', function(e){
       gridArrayY ++;
     }
   }
-  console.log(gridArrayX,gridArrayY); //gridでの場所
+
+  Send('push',{"x":gridArrayX,"y":gridArrayY,"tagInfo":"hello","attribute":"memo","page":0,"user_id":"000000000","book_id":"000000000"})
+
 });
 
 
