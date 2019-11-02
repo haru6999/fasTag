@@ -85,11 +85,28 @@ setTimeout(() => {
 
   });
 
+
+
+  // 画像移動
+  params = {};
+  try {
+    (location.href.split('?')[1]).split('&').forEach(e => params[e.split('=')[0]] = e.split('=')[1])
+  } catch (e) {
+    console.log(e)
+  }
+  var page = params['page']; //ページ
+  var book_id = params['book_id']
+  document.getElementById('toNext').addEventListener('click', function () {
+    page++;
+    elem.contentWindow.document.getElementById('bookImage').src = "/static/src/" + book_id + "/pdf/" + page + ".png";
+  }, false);
+
+  document.getElementById('toPrev').addEventListener('click', function () {
+    page--;
+    if (page < 0) {
+      page = 0
+    }
+    elem.contentWindow.document.getElementById('bookImage').src = "/static/src/" + book_id + "/pdf/" + page + ".png";
+  }, false);
+
 }, 1000)
-// 画像移動
-var page = 0; //ページ
-document.getElementById('toNext').addEventListener('click', function () {
-  console.log('bookImage');
-  page++;
-  document.getElementById('bookImage').src = "../static/png/01/" + page + ".png";
-}, false);
