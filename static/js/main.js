@@ -95,7 +95,9 @@ document.getElementById('toNext').addEventListener('click', function () {
 }, false);
 document.getElementById('toPrev').addEventListener('click', function () {
   var srcName = "../png/01/" + page + ".png";
-  page -- ;
-  elem.contentWindow.document.getElementById('bookImage').src = srcName ;
+  if(page !== 0){
+    page -- ;
+    elem.contentWindow.document.getElementById('bookImage').src = srcName ;
+  }
   console.log(page);
 }, false);
