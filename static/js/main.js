@@ -88,7 +88,7 @@ setTimeout(() => {
 // 画像移動
 var page = 0; //ページ
 document.getElementById('toNext').addEventListener('click', function () {
-  console.log("enter");
   page++;
+  console.log("../static/png/01/" + page + ".png");
   document.getElementById('bookImage').src = "../static/png/01/" + page + ".png";
 }, false);
