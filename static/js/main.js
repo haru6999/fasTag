@@ -1,3 +1,4 @@
+var gridArrayX,gridArrayY;
 function Send(path, dic) {
   console.log("Sendに入った")
   let req = new XMLHttpRequest();
@@ -68,11 +69,12 @@ function MakePin(array) {
       // marker.style.width = '50px';
       // marker.style.height = '50px';
       // marker.style.backgroundColor = "rgba(255,255,0,.5)";
+      time_line.style.opacity=1
     });
     console.log("marker",marker)
     document.getElementById("markerBoard").appendChild(marker);
-
   }
+
 }
 
 setTimeout(() => {
@@ -95,8 +97,8 @@ setTimeout(() => {
   target.addEventListener('click', function (e) {
     let targetX = e.offsetX;
     let targetY = e.offsetY;
-    let gridArrayX = 0;
-    let gridArrayY = 0;
+    gridArrayX = 0;
+    gridArrayY = 0;
     for (var i = 0; i < gridX; i++) {
       if (targetX >= arrayX[i]) {
         gridArrayX++;
@@ -108,10 +110,9 @@ setTimeout(() => {
       }
     }
     console.log(gridArrayX,gridArrayY);
-    
-    //ここにコメントを書き込む処理
-    Send('push', { "x": gridArrayX, "y": gridArrayY, "tagInfo": "hello", "attribute": "memo", "page": page, "user_id": "000000000", "book_id":book_id })
-  });
+    document.getElementById('cover').style.display="none"
+
+ });
 
   // 画像移動
   params = {};
@@ -120,10 +121,8 @@ setTimeout(() => {
   } catch (e) {
     console.log(e)
   }
-  var page = params['page']; //ページ
+  var page = params['page']; 
   var book_id = params['id']
-  console.log('page',page);
-  console.log('book_id',book_id)
   document.getElementById('toNext').addEventListener('click', function () {
     page++;
     elem.contentWindow.document.getElementById('bookImage').src = "../png/" + book_id + "/" + page + ".png";
@@ -139,5 +138,25 @@ setTimeout(() => {
     elem.contentWindow.document.getElementById('bookImage').src = "../png/" + book_id + "/" + page + ".png";
     Send('get-message',{'id':book_id,"page":page})
   }, false);
-
 }, 1000)
+
+
+document.getElementById('submit').addEventListener('click',()=>{
+  tagInfo=document.getElementById('memo_txt').value;
+  if(document.getElementById('radio_category_memo').checked){
+    attr="memo"
+  }else{
+    attr="example"
+  }
+  params = {};
+  try {
+    (location.href.split('?')[1]).split('&').forEach(e => params[e.split('=')[0]] = e.split('=')[1])
+  } catch (e) {
+    console.log(e)
+  }
+  book_id=params['id']
+  page=params['page']
+  Send('push', { "x": gridArrayX, "y": gridArrayY, "tagInfo": tagInfo, "attribute":attr, "book_id":book_id,"page": page, "user_id": "000000000", "book_id":book_id })
+  cover.style.display="block"
+  document.getElementById('memo_txt').value="";
+})

@@ -76,3 +76,8 @@ iframe {
   border-radius: 50%;
   
 }
+
+
+#time_line{
+  opacity: 0;
+}
