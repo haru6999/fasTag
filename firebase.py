@@ -4,8 +4,10 @@ from firebase_admin import firestore
 import json
 from collections import OrderedDict
 import pprint
+import ast
+import datetime
 
-cred = credentials.Certificate("serviceAccountKey.json")
+cred = credentials.Certificate("./serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -13,7 +15,7 @@ ID = 0
 # ユーザ登録用
 def UserRegistration(name, age, genre, ID):
     userBookIDList = []
-    doc_ref = db.collection(u'users').document(str(ID))
+    doc_ref = db.collection(u'users').document(ID)
     doc_ref.set({
         u'name': name,
         u'age': age,
@@ -37,23 +39,92 @@ def Reading(collection):
     users_ref = db.collection(collection)
     docs = users_ref.stream()
 
-    data = "{" + collection + ":{"
+    data = '{"' + collection + '":{'
     count = 0
     for doc in docs:
         if count == 0:
-            data = data + u'{}:{}'.format(doc.id, doc.to_dict())
+            data = data + u'"{}":{}'.format(doc.id, doc.to_dict())
         else:
-            data = data + u',{}:{}'.format(doc.id, doc.to_dict())
+            data = data + u',"{}":{}'.format(doc.id, doc.to_dict())
         count += 1
     
     data = data + "}}"
 
-    return json.dumps(data)
+    # print(data)
+    return json.dumps(ast.literal_eval(data))
 
+# あるコレクションに登録されている値の数
 def Count(collection):
     users_ref = db.collection(collection)
-    return len(["_" for _ in users_ref.stream()])
+    docs = users_ref.stream()
+    count = 0
+    for doc in docs:
+        count += 1
+
+    return count
+
+# bookIDによるtag検索
+def tagSearch(bookID):
+    data = Reading(u'books')
+    data = json.loads(data)
+    return data["books"][bookID]["tagAll"]
 
 
-#print(Reading('users'))
+def MakeBooksTagAllData(userID, tagData, oldTagAll):
+    oldData = ast.literal_eval(oldTagAll)
+    oldData[userID] = tagData
+    return json.dumps(oldData)
 
+# tagの登録用
+def RegistrationTag(userID, bookID, tagID, tagData):
+    userBookID = userID + bookID
+    # print(userBookID)
+    Registration(userBookID, str(tagID), tagData)
+    newData = MakeBooksTagAllData(userID, tagData, tagSearch(bookID))
+    Update("books", bookID, "tagAll", newData)
+    Update("books", bookID, "updateTime", datetime.datetime.now())
+    return tagID + 1
+
+
+def GetTagAllNum(tagAll):
+    return len(ast.literal_eval(tagAll))
+
+# [id,bookName,tagAllの数,tag]
+def SearchBook(word):
+    users_ref = db.collection('books').order_by("popularity", direction=firestore.Query.DESCENDING)
+    docs = users_ref.stream()
+    result = []
+    count = 0
+    for doc in docs:
+        data = ast.literal_eval(u'{}'.format(doc.to_dict()))
+        ID = u"{}".format(doc.id)
+        tagAllNum = GetTagAllNum(data["tagAll"])
+
+        if word == data["author"]:
+            result.insert(count, [ID, data["bookName"], tagAllNum, data["attribute"]])
+            count += 1
+        elif word == data["bookName"]:
+            result.insert(count, [ID, data["bookName"], tagAllNum, data["attribute"]])
+            count += 1
+        elif word in data["author"]:
+            result.append([ID, data["bookName"], tagAllNum, data["attribute"]])
+        elif word in data["bookName"]:
+            result.append([ID, data["bookName"], tagAllNum, data["attribute"]])
+    return result
+
+
+
+def DefaultValue():
+    users_ref = db.collection('books').order_by("updateTime", direction=firestore.Query.DESCENDING).limit(9)
+    docs = users_ref.stream()
+    result = []
+    count = 0
+    for doc in docs:
+        data = u'{}'.format(doc.to_dict())
+        data = ast.literal_eval(data)
+        ID = u"{}".format(doc.id)
+        tagAllNum = GetTagAllNum(data["tagAll"])
+        result.append([ID, data["bookName"], tagAllNum, data["attribute"]])
+        count += 1
+    
+    return result
