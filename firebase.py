@@ -53,16 +53,6 @@ def Reading(collection):
     # print(data)
     return json.dumps(ast.literal_eval(data))
 
-# あるコレクションに登録されている値の数
-def Count(collection):
-    users_ref = db.collection(collection)
-    docs = users_ref.stream()
-    count = 0
-    for doc in docs:
-        count += 1
-
-    return count
-
 # bookIDによるtag検索
 def tagSearch(bookID):
     data = Reading(u'books')
@@ -71,9 +61,9 @@ def tagSearch(bookID):
 
 
 def MakeBooksTagAllData(userID, tagData, oldTagAll):
-    oldData = ast.literal_eval(oldTagAll)
-    oldData[userID] = tagData
-    return json.dumps(oldData)
+    tagData["user"] = userID
+    oldTagAll.append(tagData)
+    return oldTagAll
 
 # tagの登録用
 def RegistrationTag(userID, bookID, tagID, tagData):
@@ -82,7 +72,9 @@ def RegistrationTag(userID, bookID, tagID, tagData):
     Registration(userBookID, str(tagID), tagData)
     newData = MakeBooksTagAllData(userID, tagData, tagSearch(bookID))
     Update("books", bookID, "tagAll", newData)
-    Update("books", bookID, "updateTime", datetime.datetime.now())
+    now = datetime.datetime.now()
+    strNow = now.strftime("%Y/%m/%d %H:%M:%S")
+    Update("books", bookID, "updateTime", strNow)
     return tagID + 1
 
 
@@ -98,7 +90,7 @@ def SearchBook(word):
     for doc in docs:
         data = ast.literal_eval(u'{}'.format(doc.to_dict()))
         ID = u"{}".format(doc.id)
-        tagAllNum = GetTagAllNum(data["tagAll"])
+        tagAllNum =len(data["tagAll"])
 
         if word == data["author"]:
             result.insert(count, [ID, data["bookName"], tagAllNum, data["attribute"]])
@@ -115,7 +107,7 @@ def SearchBook(word):
 
 
 def DefaultValue():
-    users_ref = db.collection('books').order_by("updateTime", direction=firestore.Query.DESCENDING).limit(9)
+    users_ref = db.collection('books').order_by("updateTime", direction=firestore.Query.DESCENDING)
     docs = users_ref.stream()
     result = []
     count = 0
@@ -123,8 +115,23 @@ def DefaultValue():
         data = u'{}'.format(doc.to_dict())
         data = ast.literal_eval(data)
         ID = u"{}".format(doc.id)
-        tagAllNum = GetTagAllNum(data["tagAll"])
+        tagAllNum = len(data["tagAll"])
+        print(data["tagAll"])
+        print()
         result.append([ID, data["bookName"], tagAllNum, data["attribute"]])
         count += 1
     
     return result
+
+def Count(collection):
+    users_ref = db.collection(collection)
+    docs = users_ref.stream()
+    count = 0
+    for doc in docs:
+        count += 1
+
+    return count
+
+
+#data = {"tagInfo": "he", "x": "22", "y": "19", "page": "memo", "attribute": "memo"}
+#RegistrationTag(u"000000001", u"000000001", 1, data)

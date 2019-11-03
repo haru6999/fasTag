@@ -15,6 +15,7 @@ def Main():
 @app.route("/page", methods=["GET", "POST"])
 def page():
     return render_template("page.html")
+
 @app.route("/get-book", methods=["GET"])
 def getbook():
     book_id=request.args.get('id')
@@ -35,7 +36,7 @@ def push():
         "user":args.get('user_id')
     }
     user_book_id=args.get('user_id')+args.get('book_id')
-    fb.Registration(user_book_id,str(fb.Count(user_book_id)),field)
+    fb.RegistrationTag(args.get('user_id'),args.get('book_id'),fb.Count(user_book_id), field)
 
     return json.dumps(field)
   
@@ -43,7 +44,9 @@ def push():
 @app.route("/get-message", methods=["GET"])
 def get():
     args=request.args
+    print(args.get('id'))
     res=fb.tagSearch(args.get('id'))
+    print(res)
     return jsonify(res)
 
 
