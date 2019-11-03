@@ -4,22 +4,30 @@ function Send(path, dic) {
   req.onreadystatechange = function () {
     console.log("onreadystatechange入った");
     if (req.readyState == 4) { // 通信の完了時
-      console.log("通信の完了時");
+      console.log('done!')
+      res=eval('('+req.responseText+')')
       if (req.status == 200) { // 通信の成功時
-        console.log('done!')
-        MakePin(eval("(" + req.responseText + ")"))
+        if(path=="get-message"){
+          for(i=0;i<res.length;i++){
+            res[i]=eval('('+res[i]+')')
+          }
+          output=[]
+          for(i=0;i<res.length;i++){
+            if(res[i]["page"]==""+dic['page']){
+              output.push(res[i])
+            }
+          }
+          MakePin(output)
+          //メモ：output[0]={"user":"0000000000","tagInfo": "ここにコメント１", "x": "22", "y": "18", "page": "3", "attribute": "memo"}
+        }
+        if(path=="push"){
+          MakePin([res])
+        }
       }
     } else {
       console.log('connecting....')
-      let gridX = Object.values(dic)[0];
-      let gridY = Object.values(dic)[1];
-      MakePin(gridX,gridY);
     }
   }
-  
-  console.log('x?',Object.values(dic[0]));
-  console.log('y?',Object.values(dic[1]));
-
   keys = Object.keys(dic)
   vals = Object.values(dic)
   output = ""
@@ -31,7 +39,7 @@ function Send(path, dic) {
   }
   req.open('GET', '/' + path + '?' + output, true);
   console.log('output',output);
-  // req.send(null);
+  req.send(null);
 }
 
 // 画像のクリック場所取得
@@ -41,16 +49,9 @@ const arrayY = [];
 let gridX = 35;
 let gridY = 50;
 
-function MakePin(x,y) {
-  console.log('makepin入った',x,y)
-  // let gridX = Object.values(dic[0]);
-  // let gridY = Object.values(dic[1]);
-  var element = document.getElementById( "cvs1" ) ;
-  var ctx = element.getContext( "2d" ) ;
-  ctx.beginPath () ;
-  ctx.arc( arrayX[x], arrayY[y], 50, 0 * Math.PI / 180, 360 * Math.PI / 180, false ) ;
-  ctx.fillStyle = "rgba(255,255,0,0.5)" ;
-  ctx.fill() ;
+function MakePin(lst) {
+  console.log(lst)
+
 }
 
 setTimeout(() => {
@@ -83,6 +84,8 @@ setTimeout(() => {
       }
     }
     console.log(gridArrayX,gridArrayY);
+    
+    //ここにコメントを書き込む処理
     Send('push', { "x": gridArrayX, "y": gridArrayY, "tagInfo": "hello", "attribute": "memo", "page": 0, "user_id": "000000000", "book_id": "000000000" })
   });
 
@@ -94,12 +97,13 @@ setTimeout(() => {
     console.log(e)
   }
   var page = params['page']; //ページ
-  var book_id = params['book_id']
+  var book_id = params['id']
   console.log('page',page);
   console.log('book_id',book_id)
   document.getElementById('toNext').addEventListener('click', function () {
     page++;
     elem.contentWindow.document.getElementById('bookImage').src = "../png/" + book_id + "/" + page + ".png";
+    Send('get-message',{'id':book_id,"page":page})
   }, false);
 
   document.getElementById('toPrev').addEventListener('click', function () {
@@ -108,6 +112,7 @@ setTimeout(() => {
       page = 0
     }
     elem.contentWindow.document.getElementById('bookImage').src = "../png/" + book_id + "/" + page + ".png";
+    Send('get-message',{'id':book_id,"page":page})
   }, false);
 
 }, 1000)

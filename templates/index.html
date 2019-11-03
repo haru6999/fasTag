@@ -1,48 +1,129 @@
+
 <!DOCTYPE html>
-<html lang="ja">
-
+<html lang="ja" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, height=device-height" />
-
-  <link rel="stylesheet" href="../static/css/materialize.min.css">
-  <link rel="stylesheet" href="../static/css/style.css">
-  
+  <meta charset="utf-8">
+  <title>FasTag</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <!-- <script src="main.js"></script> -->
+  <script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js"></script>
+  <link href="../static/css/style.1.css" rel="stylesheet">
+  <link href="../static/css/tag.css" rel="stylesheet">
 </head>
-
 <body>
-  <!-- <nav>
-    <div class="nav-wrapper">
-      <a hre="#" class="brand-logo left">OTHLO</a>
+
+<!-- Header -->
+<header>
+  <nav class="navbar">
+    <div class="nav-logo">
+      <a href="#" class="nav-img"><img class="nav-img" src="../static/img/logo.png" alt="fastag"></a>
+      <!-- <button class="nav-toggler" type="button" data-toggle="collapse">
+  			<span class="navbar-toggler-icon"></span> -->
     </div>
-  </nav> -->
-
-
-  <div id="book">
-    <!-- <iframe src="../static/pdf/1.pdf" width="100%" height="100%">
-      <p><b>表示されない時の表示</b>: <a href="pdf/1.pdf">PDF をダウンロード</a>.</p>
-    </iframe> -->
-    <div id="toPrev">
-      
+    <div class="wrap">
+        <form action="/search_result" method="POST" class="search">
+            <input type="text" class="searchTerm" placeholder="What are you looking for?" name="text">
+            <button type="submit" class="searchButton" name="my-form" value="Send">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
     </div>
-    <div id="bookContent">
-      <canvas id="cvs1" width="450" height="150">
-        aa
-      <iframe src="../static/iframe/png.html" id="bookIFrame">
-        
-      </iframe>
-      </canvas>
+    <div class="icon">
+    <a href="#"><i class="fas fa-book-open fa-2x my-green"></i></a>
+    <a href="#"><i class="fas fa-user-circle fa-2x my-green"></i></a>
     </div>
-    <div id="toNext">
-
+    <!-- <div class="nav-search">
+      <form class="search-container">
+        <input type="text" id="search-bar" placeholder="Search">
+        <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
+      </form>
+    </div> -->
+    <!-- <div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a href="#" class="nav-link">Home</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">About</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">Services</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">Team</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">Connect</a>
+				</li>
+			</ul>
+		</div> -->
+  </nav>
+</header>
+<!-- Navigation -->
+    <div class="nav-container">
+      <ul id="accordion" class="accordion">
+        <li>
+          <div class="link"><i class="fa fa-paint-brush my-category"></i>デザイン<i class="fa fa-chevron-down my-dropdown"></i></div>
+          <ul class="submenu">
+            <li><a href="#">Photoshop</a></li>
+            <li><a href="#">Illustlator</a></li>
+            <li><a href="#">Sketch</a></li>
+            <li><a href="#">UI / UX</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="link"><i class="fa fa-code my-category"></i>フロントエンド<i class="fa fa-chevron-down my-dropdown"></i></div>
+          <ul class="submenu">
+            <li><a href="#">Javascript</a></li>
+            <li><a href="#">jQuery</a></li>
+            <li><a href="#">Frameworks javascript</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="link"><i class="fa fa-globe my-category"></i>バックエンド<i class="fa fa-chevron-down my-dropdown"></i></div>
+          <ul class="submenu">
+            <li><a href="#">Google</a></li>
+            <li><a href="#">Bing</a></li>
+            <li><a href="#">Yahoo</a></li>
+            <li><a href="#">Otros buscadores</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="link"><i class="fa fa-mobile my-category"></i><i class="fa fa-chevron-down my-dropdown"></i></div>
+          <ul class="submenu">
+            <li><a href="#">Tablets</a></li>
+            <li><a href="#">Dispositivos mobiles</a></li>
+            <li><a href="#">Medios de escritorio</a></li>
+            <li><a href="#">Otros dispositivos</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
 
-  </div><div id="comments">
-  </div>
+    <!-- Books -->
+    <main class="book-container">
+        {% block body %}
+        {% for d in lists %}
+            <div class="book">
+                <img class="book-img" src="../static/src/{{ d[0] }}/png/0.jpg" alt="">
+                <div class="book-tag">
+                    <span class="{{ d[3] }}">#{{ d[3] }}</span>
+                </div>
+                <div class="book-content">
+                    <h2 class="book-title">{{ d[1] }}</h2>
+                    <p class="book-pv-num">{{ d[2] }}</p>
+                </div>
+                <div class="book-link">
+                  <a href="http://webcreatorbox.com/about">About</a>
+                  <a href="http://webcreatorbox.com/">Detail</a>
+                </div>
+            </div>
+        {% endfor %}
+        {% endblock %}
+    </main>
 
-  <script src="../static/js/main.js"></script>
-  <script src="../static/js/materialize.min.js"></script>
+
 </body>
-
 </html>

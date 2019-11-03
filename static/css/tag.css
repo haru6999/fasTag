@@ -1,0 +1,34 @@
+.book-tag .Python{
+    background: #2f83e4;
+    color:#fff;
+}
+
+.book-tag .CSS{
+    background: #0059fa;
+    color:#fff;
+}
+
+.book-tag .JavaScript{
+    background: #ffcc00;
+    color:#fff;
+}
+
+.book-tag .Ruby{
+    background: #fa2100;
+    color:#fff;
+}
+
+.book-tag .PHP{
+    background: #d600ff;
+    color:#fff;
+}
+
+.book-tag .Design{
+    background: #43fab5;
+    color:#fff;
+}
+
+.book-tag .other{
+    background: #7f7f7f;
+    color:#fff;
+}
