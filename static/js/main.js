@@ -73,7 +73,7 @@ function MakePin(list) {
     document.getElementById("markerBoard").appendChild(marker);
 
   }
-
+}
 
 setTimeout(() => {
   console.log('setTimeout入った')
