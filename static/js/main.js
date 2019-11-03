@@ -9,10 +9,12 @@ function Send(path, dic) {
       if (req.status == 200) { // 通信の成功時
         if(path=="get-message"){
           for(i=0;i<res.length;i++){
-            res[i]=eval('('+res[i]+')')
+            res[i]=eval(res[i])
           }
+          console.log(res)
           output=[]
           for(i=0;i<res.length;i++){
+            console.log(res[i]["page"],""+dic['page'])
             if(res[i]["page"]==""+dic['page']){
               output.push(res[i])
             }
@@ -50,16 +52,14 @@ let gridX = 35;
 let gridY = 50;
 var commentDict = {};
 
-function MakePin(list) {
+function MakePin(array) {
   console.log('makepin入った');
   // 他人のコメントを読み取る処理
-  let array = [{ "x": 250, "y": 250, "tagInfo": "hello", "attribute": "memo", "page": 0, "user_id": "000000000", "book_id": "000000000" }]
-
   for(i = 0;i<array.length;i++){
     let marker = document.createElement('div');
     marker.classList.add("marker");
-    marker.style.top = 0;
-    marker.style.left = 0;
+    marker.style.top = (array[i].x)/gridX*555+"px";
+    marker.style.left = (array[i].y)/gridY*785+"px";
     marker.id = "marker" + i;
     commentDict["marker" + i] = {"attribute": array[i]["attribute"],"user_id": array[i]["user_id"],"tagInfo": array[i]["tagInfo"]}
     marker.addEventListener('click',function(){
@@ -110,7 +110,7 @@ setTimeout(() => {
     console.log(gridArrayX,gridArrayY);
     
     //ここにコメントを書き込む処理
-    Send('push', { "x": gridArrayX, "y": gridArrayY, "tagInfo": "hello", "attribute": "memo", "page": 0, "user_id": "000000000", "book_id": "000000000" })
+    Send('push', { "x": gridArrayX, "y": gridArrayY, "tagInfo": "hello", "attribute": "memo", "page": page, "user_id": "000000000", "book_id":book_id })
   });
 
   // 画像移動
