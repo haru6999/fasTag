@@ -1,13 +1,19 @@
 function Send(path, dic) {
+  console.log("Sendに入った")
   let req = new XMLHttpRequest();
   req.onreadystatechange = function () {
+    console.log("onreadystatechange入った");
     if (req.readyState == 4) { // 通信の完了時
+      console.log("通信の完了時");
       if (req.status == 200) { // 通信の成功時
         console.log('done!')
         MakePin(eval("(" + req.responseText + ")"))
       }
     } else {
       console.log('connecting....')
+      let gridX = Object.values(dic)[0];
+      let gridY = Object.values(dic)[1];
+      MakePin(gridX,gridY);
     }
   }
 
@@ -24,28 +30,31 @@ function Send(path, dic) {
   // req.send(null);
 }
 
-
-function MakePin(res) {
-  console.log(res)
-}
-
 // 画像のクリック場所取得
 const elem = document.getElementById('bookIFrame');
+const arrayX = [];
+const arrayY = [];
+let gridX = 35;
+let gridY = 50;
+
+function MakePin(x,y) {
+  console.log('makepin入った',x,y)
+  // let gridX = Object.values(dic[0]);
+  // let gridY = Object.values(dic[1]);
+  var element = document.getElementById( "cvs1" ) ;
+  var ctx = element.getContext( "2d" ) ;
+  ctx.beginPath () ;
+  ctx.arc( arrayX[x], arrayY[y], 50, 0 * Math.PI / 180, 360 * Math.PI / 180, false ) ;
+  ctx.fillStyle = "rgba(255,255,0,0.5)" ;
+  ctx.fill() ;
+}
 
 setTimeout(() => {
-  console.log('ok')
+  console.log('setTimeout入った')
   var bookImage = elem.contentWindow.document.getElementById('bookImage');
-  console.log("aa");
-  console.log(bookImage);
-
-
-  let target = bookImage
+  let target = bookImage;
   let elementX = bookImage.clientWidth; //要素の横幅
   let elementY = bookImage.clientHeight; //要素の縦幅
-  const arrayX = [];
-  const arrayY = [];
-  let gridX = 35;
-  let gridY = 50;
 
   for (var i = 0; i < gridX; i++) {
     arrayX[i] = elementX / gridX * (i + 1);
@@ -71,7 +80,6 @@ setTimeout(() => {
     }
     console.log(gridArrayX,gridArrayY);
     Send('push', { "x": gridArrayX, "y": gridArrayY, "tagInfo": "hello", "attribute": "memo", "page": 0, "user_id": "000000000", "book_id": "000000000" })
-
   });
 
   // 画像移動
@@ -87,7 +95,7 @@ setTimeout(() => {
   console.log('book_id',book_id)
   document.getElementById('toNext').addEventListener('click', function () {
     page++;
-    elem.contentWindow.document.getElementById('bookImage').src = "../pdf/" + book_id + "/" + page + ".png";
+    elem.contentWindow.document.getElementById('bookImage').src = "../png/" + book_id + "/" + page + ".png";
   }, false);
 
   document.getElementById('toPrev').addEventListener('click', function () {
@@ -95,7 +103,7 @@ setTimeout(() => {
     if (page < 0) {
       page = 0
     }
-    elem.contentWindow.document.getElementById('bookImage').src = "../pdf/" + book_id + "/" + page + ".png";
+    elem.contentWindow.document.getElementById('bookImage').src = "../png/" + book_id + "/" + page + ".png";
   }, false);
 
 }, 1000)
