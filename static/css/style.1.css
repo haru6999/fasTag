@@ -1,6 +1,10 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
+#comment h3{
+  font-size:50%;
+  margin:2px;
+}
 
 * {
     margin:0;
@@ -472,13 +476,15 @@ img.book-pv-icon {
 
 /* 投稿フォーム */
 #comment{
+    position:absolute;
+    top:0;
+    right:0;
     display: inline-block;
     vertical-align: top;
     background: #00acc1;
     width: 30vw;
     height: 100vh;
 }
-
 #comment #time_line{
     display: inline-block;
     width: 90%;
@@ -496,12 +502,20 @@ img.book-pv-icon {
     background: #FFFFFF;
 }
 
-#comment form{
+#comment .f{
     width: 100%;
     height: 30vh;
 }
 
-#comment form textarea{
+#cover
+{
+  position:absolute;
+  background-color:rgba(0,0,0,0.3);
+  width: 100%;
+  height: 50vh;
+}
+
+#comment .f textarea{
     background: #FFFFFF;
     width: 27vw;
     height: 18vh;
@@ -521,10 +535,10 @@ img.book-pv-icon {
     font-size: 0;
 
 }
-#comment form input[type="radio"] {
+#comment .f input[type="radio"] {
     display: none; /* ラジオボタンを非表示にする */
 }
-#comment form input[type="radio"] + label {
+#comment .f input[type="radio"] + label {
     display: inline-block;
     color: #fff;
     font-size: 1.5vw;
@@ -538,13 +552,13 @@ img.book-pv-icon {
     cursor: pointer;
 }
 
-#comment form input[type="radio"]:checked + label {
+#comment .f input[type="radio"]:checked + label {
     background: #ffffff;/* マウス選択時の背景色を指定する */
     color: #31A9EE; /* マウス選択時のフォント色を指定する */
     cursor: default;
 }
 
-#comment form input[type="submit"]{
+#comment .f input[type="submit"]{
     background: #fff;
     color: #31A9EE; /* マウス選択時のフォント色を指定する */
     width: 90%;
@@ -557,6 +571,6 @@ img.book-pv-icon {
     -o-transition: all 0.3s ease;
     transition: all  0.3s ease;
 }
-#comment form input[type="submit"]:hover{
+#comment .f input[type="submit"]:hover{
     opacity: 0.8;
 }

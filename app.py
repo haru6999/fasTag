@@ -44,9 +44,7 @@ def push():
 @app.route("/get-message", methods=["GET"])
 def get():
     args=request.args
-    print(args.get('id'))
     res=fb.tagSearch(args.get('id'))
-    print(res)
     return jsonify(res)
 
 
